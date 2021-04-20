@@ -15,3 +15,8 @@ Projeto desenvolvido durante a Next level week 05
 
 ### SSG Static site generation
 * A diferença é que o resultado retornado pelo servidor next.js para montar a interface é cacheada e pode ser acessadas por outros usuários por um período que pode ser pré determinado.
+
+## Next.js
+* Next é quase ele inteiro feito com react, e a maioria das funções expecificas são executadas automaticamente.
+* Comando para criar uma aplicação next.js:
+```create-next-app nomeDoProjeto```
