@@ -53,6 +53,17 @@ export async function getStaticProps() {
 * Comando para rodar o projeto: 
 ```yarn dev``` ou ```npm run dev```
 * Ele não abre o navegador sozinho, tem que acessar a url, geralmente a localhost:3000
+* A tag Image que é própria do next formata a imagem para que não se corra o risco de carregar uma imagem muito pesada, porém essa tag não funciona par imagens vindas de qualquer fonte, por isso deve ser criado um arquivo next.config.js na raiz do projeto passando a origem da imagem:
+```
+module.exports = {
+    images: {
+        domains: ['storage.googleapis.com']
+    }
+};
+```
+* O next cria roteamento dos arquivos que ficam no diretório pages, e acessando a url com a rota /nomeDoArquivo eu sou direcionado para ele; exempo "http://localhost:3000/episode"
+
+* Podemos passar para buscar um episodio especifico usando o id ou podemos usar **slug**, que pode ser o próprio titulo do episódio em um formato entendido pela url, no caso o-nome-do-episodio;
 
 
 ## TypeScript
@@ -81,6 +92,12 @@ function createWelcomeMessage(user: User) {
 ## React
 * O arquivo _app.tsx está presente em todas as telas da aplicação, então componentes como o header, que devem ser apresentadas em todas as telas, podem ser adicionados direto no _app;
 
+* Qunado fazemos uma estrutura de repetição para listar diversos elementos em tela, a propriedade key deve ser colocada no primeiro elemento que vem dentro do return para poder identificar esse elemento, caso não sejá colocado, cada vez que um dos itens sofrer alteração, o react exclui tudo e recarrega novamente, pois não consegue identificar qual item foi alterado.
+
+* Você pode fazer com que o react renderize como HTML algum texto que ele receba do servidor ou outro local, setando na tag uma propriedade expecifica: 
+**<div className={styles.description} dangerouslySetInnerHTML={{ __html:  episode.description}} />**
+Ele vai renderizar como html o episode.description;
+
 ## Style
 * Para a estilização será usado o SASS, que é um pré-processador css, ele permite otimizar a utilização do css,
 podendo usar CSS encadeado, exemplo:
@@ -94,7 +111,12 @@ body {
 ```
 * Comando para instalar o SASS ```yarn add sass```
 
+* Quando usamos links para mudar de página em um SPA, ao clicar a página é recarregada do zero, isso pode ser driblado usando o Link que pode ser importado de **next/Link**
+
 
 ## Bibliotecas extras
 * Biblioteca para trabalhar com datas ```yarn add date-fns```
 * JSON server, pode ser usado na etapa de testes, é uma fake api para usar durante o desenvolvimento, ```yarn add json-server -D```
+** tendo um arquivo JSON pronto, podemos criar um script no package,json para startar o servidor, exemplo:
+```"server": "json-server server.json -w -d 750 -p 3333"```vai iniciar o servidor na porta 3333 -d 750 é para simular um delay de 750ms
+* Axios, biblioteca par fazer requisições HTTP, ```yarn add axios```, uma vantagem é setar uma baseURL, que pode ser usada em todas as chamadas HTTP;
