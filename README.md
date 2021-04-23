@@ -45,6 +45,16 @@ export async function getStaticProps() {
     }
 }
 ```
+* Na aplicação em questão, e em muitas outras, quando se trabalha com SSG, as paginas são geradas de forma estática na hora do build do projeto, porém exitem paginas que precisam ser criadas dinâmicamente, a geração dinâmica de páginas estáticas é a geração de páginas que recebem parâmetros dinâmicos;
+* Toda classe que possui o método getStaticProps, que é responsável por recuparar os parâmetros dessa pagina estática,
+deve possuir o método getStaticPaths, um exemplo é a classe [slug].tsx que está em pages/episodes;
+* Esse método getStaticPaths é responsável por quais rotas serão criadas estaticamente na hora do build do projeto, ele retorna o **paths**, que é um array onde pode ser passado os slugs das rotas que serãoi carregadas por exemplo e retorna também o **fallback**, que pode receber false, true ou blocking:
+-- false: ele só cria paginas estáticas das rotas passadas no paths, se tentar acessar outras retorna 404,
+-- true: ele cria a pagina estática na hora que o usuario vai acessar, mesmo que não tenha sido passado no paths ou 
+carregado no build,  e o true roda as requisições no lado do client, ou seja, ao clicar no link você ja é direcionado para a página, mesmo que ela não tenha sido carregada ainda,
+--blocking: tem o funcionamento parecido com o true, porém as requisições rodam no servidor next.js, que fica entre o client 
+e o servidor back-end, assim, após clicar no link, você só será direcionado para a página quando ela ja estiver com todos os
+ dados caragados, é a melhor opções para SEOs.
 
 ## Next.js
 * Next é quase ele inteiro feito com react, e a maioria das funções expecificas são executadas automaticamente.
@@ -98,6 +108,22 @@ function createWelcomeMessage(user: User) {
 **<div className={styles.description} dangerouslySetInnerHTML={{ __html:  episode.description}} />**
 Ele vai renderizar como html o episode.description;
 
+* Propriedades no react só tem seus calores alterados usando o useState();
+
+* Quando usamos links para mudar de página em um SPA, ao clicar a página é recarregada do zero, isso pode ser driblado usando o Link que pode ser importado de **next/Link**;
+* ***Context api*** é uma das funcionalidades mais importantes do React, como o react se baseia em componentes, temos que ter uma maneira desses componentes, que estão separados, trocarem dados eentre si e também temos que ter a possibilidade de acionarmos ações em um componente e refletir em outros;
+
+Criamos uma classe par adicionar os contextos, importamos o CreateContext do react  exportamos o contexto criado:
+```
+import { createContext } from 'react';
+
+export const PlayerContext = createContext('string');
+//passamos no createContext o formato que esperamos receber na chamada da função
+```
+Envolvemos o componnte que ira acessar o contextocom a tag que nesse caso é PlayerContext.Provider com a prop value,
+ o que for passado nessa prop pode ser acessado por outros componentes ***ver a classe _app.tsx no file pages***, em outro componente setamos um useContext passando o contexto que foi importado e podemos usar no componente *** ver index.tsx em src/Player***
+
+
 ## Style
 * Para a estilização será usado o SASS, que é um pré-processador css, ele permite otimizar a utilização do css,
 podendo usar CSS encadeado, exemplo:
@@ -111,12 +137,10 @@ body {
 ```
 * Comando para instalar o SASS ```yarn add sass```
 
-* Quando usamos links para mudar de página em um SPA, ao clicar a página é recarregada do zero, isso pode ser driblado usando o Link que pode ser importado de **next/Link**
-
-
 ## Bibliotecas extras
 * Biblioteca para trabalhar com datas ```yarn add date-fns```
 * JSON server, pode ser usado na etapa de testes, é uma fake api para usar durante o desenvolvimento, ```yarn add json-server -D```
 ** tendo um arquivo JSON pronto, podemos criar um script no package,json para startar o servidor, exemplo:
 ```"server": "json-server server.json -w -d 750 -p 3333"```vai iniciar o servidor na porta 3333 -d 750 é para simular um delay de 750ms
 * Axios, biblioteca par fazer requisições HTTP, ```yarn add axios```, uma vantagem é setar uma baseURL, que pode ser usada em todas as chamadas HTTP;
+* React slider, biblioteca para manipular componentes como barras de progresso e sliders, ```yarn add rc-slider```

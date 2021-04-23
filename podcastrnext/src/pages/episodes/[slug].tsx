@@ -27,6 +27,12 @@ type EpisodeProps = {
 }
 
 export default function Episode({ episode }: EpisodeProps) {
+   /* const router = useRouter();
+
+    if (router.isFallback) { //para o caso de usar o fallback como true, se os dados ainda não foram carregados
+        return <p>Carregando...</p>
+    }*/ 
+
     return (
         <div className={styles.episode}>
             <div className={styles.thumbnailContainer}>
