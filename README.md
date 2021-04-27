@@ -59,7 +59,7 @@ e o servidor back-end, assim, após clicar no link, você só será direcionado 
 ## Next.js
 * Next é quase ele inteiro feito com react, e a maioria das funções expecificas são executadas automaticamente.
 * Comando para criar uma aplicação next.js:
-```create-next-app nomeDoProjeto```
+```npx create-next-app nomeDoProjeto```
 * Comando para rodar o projeto: 
 ```yarn dev``` ou ```npm run dev```
 * Ele não abre o navegador sozinho, tem que acessar a url, geralmente a localhost:3000
